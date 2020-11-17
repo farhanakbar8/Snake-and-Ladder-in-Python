@@ -72,17 +72,6 @@ def checkingLadderSnake(snl, playerpos) :
             playerpos = snl[playerpos]
     return playerpos
 
-def singleplayer() :
-
-
-def twoplayer() :
-
-
-def start() :
-    welcomingmessage()
-    gamemode = input()
-    
-
 
 snl = {}
 randomingLadder(snl)
@@ -104,7 +93,3 @@ while playerpos < 100 and play != 'QUIT':
         print('You win!')
     else :
         play = input()
-
-
-if __name__ == "__main__":
-    start()
