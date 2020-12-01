@@ -60,8 +60,6 @@ def randomingSnake(snl) :
     return snl
 
 
-
-
 def checkingLadderSnake(snl, playerpos) :
     if playerpos in snl:
         if playerpos < snl[playerpos] :
@@ -72,24 +70,92 @@ def checkingLadderSnake(snl, playerpos) :
             playerpos = snl[playerpos]
     return playerpos
 
+def start() :
+    welcomingmessage()
+    instructions()
+    menu()
 
-snl = {}
-randomingLadder(snl)
-randomingSnake(snl)
+def instructions():
+    print("--------------------HOW TO PLAY THE GAME-----------------------")
+    print('Press \"{}\" to roll the dice and type \"{}\" to stop the game'.format('Enter', 'QUIT'))
+    print("---------------------------------------------------------------")
+    print("---------------------------------------------------------------")
+    print("---------------------------------------------------------------")
 
-print(snl)
-playerpos = 0
-playerpos = 0
-play = input()
-while playerpos < 100 and play != 'QUIT':
-    dice = rollDice()
-    print('Your dice is', dice)
-    playerpos += dice
-    if playerpos > 100 :
-        playerpos = above100(playerpos)
-    playerpos = checkingLadderSnake(snl, playerpos)
-    print(playerpos)
-    if playerpos == 100 :
-        print('You win!')
-    else :
+def welcomingmessage():
+    print("----------------------------------------------------------------")
+    print("----------------------------------------------------------------")
+    print("--------------Welcome To Snake and Ladder Game------------------")
+    print("----------------------------------------------------------------")
+    print("----------------------------------------------------------------")
+
+def menu():
+    print("\n\nChoose your game mode!!! (1 -> Single Player 2 -> Multiplayer)")
+    gamemode = int(input("Input : "))
+    snl = {}
+    print("")
+    randomingLadder(snl)
+    randomingSnake(snl)
+    if gamemode == 1:
+        singleplayer(snl)
+    elif gamemode == 2:
+        twoplayer(snl)
+    
+def singleplayer(snl):
+    playername = input("Player Name : ")
+    playerpos = 0
+    play = input()
+    while playerpos < 100 and play != 'QUIT':
+        dice = rollDice()
+        print('Your dice is', dice)
+        playerpos += dice
+        if playerpos > 100 :
+            playerpos = above100(playerpos)
+        playerpos = checkingLadderSnake(snl, playerpos)
+        print(playername, "Position is at", playerpos, "\n")
+        winornot(playerpos, playername)
         play = input()
+
+def twoplayer(snl):
+    player1name = input("Player 1 Name : ")
+    player2name = input("Player 2 Name : ")
+    player1pos = 0
+    player2pos = 0
+    play = ""
+    while (player1pos < 100 and player2pos < 100):
+        print(player1name, "turn")
+        play = input()
+        if play == "QUIT":
+            print(player1name, "Position is at", player1pos, "\n")
+            print(player2name, "Position is at", player2pos, "\n")
+            break
+        dice = rollDice()
+        print("Your dice is", dice)
+        player1pos += dice
+        if player1pos > 100:
+            player1pos = above100(player1pos)
+        player1pos = checkingLadderSnake(snl, player1pos)
+        print(player1name, "Position is at", player1pos, "\n")
+        winornot(player1pos, player1name)
+
+        print(player2name, "turn")
+        play = input()
+        if play == "QUIT":
+            print("\n", player1name, "Position is at", player1pos, "\n")
+            print(player2name, "Position is at", player2pos, "\n")
+            break
+        dice = rollDice()
+        print("Your dice is", dice)
+        player2pos += dice
+        if player2pos > 100:
+            player2pos = above100(player2pos)
+        player2pos = checkingLadderSnake(snl, player2pos)
+        print(player2name, "Position is at", player2pos, "\n")
+        winornot(player2pos, player2name)
+
+def winornot(playerpos, playername):
+    if playerpos == 100:
+        print(playername, 'Win!')
+
+if __name__ == "__main__":
+    start()
